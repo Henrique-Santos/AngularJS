@@ -16,4 +16,33 @@ angular.module('minhasDiretivas', [])
     ddo.templateUrl = 'js/directives/meu-painel.html';
 
     return ddo;
+})
+.directive('minhaFoto', function() {
+
+    var ddo = {};
+
+    ddo.restric = 'AE';
+
+    ddo.scope = {
+        titulo: '@',
+        url: '@'
+    };
+
+    ddo.template = '<img class="img-responsive center-block" ng-src="{{url}}" alt="{{titulo}}">';
+
+    return ddo;
+})
+.directive('meuBotaoPerigo', function() {
+
+    var ddo = {};
+    ddo.restric = 'E';
+
+    ddo.scope = {
+        nome: '@', // @ é apenas uma cópia de valor, e essa valor é sempre string
+        acao: '&' // Indica que essa propriedade, ao em vez de receber uma string, receberá uma expressão, e passará ela para ser executada no scope.
+    };
+    
+    ddo.template = '<button ng-click="acao(foto)" class="btn btn-danger btn-block">{{ nome }}</button>';
+
+    return ddo;
 });
