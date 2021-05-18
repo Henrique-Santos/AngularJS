@@ -8,15 +8,19 @@ angular.module('meusServicos', ['ngResource'])
         }
     });
 })
-.factory('cadastroDeFotos', function(recursoFoto, $q) { // $q retorna uma Promisse
+.factory('cadastroDeFotos', function(recursoFoto, $q, $rootScope) { // $q retorna uma Promisse
 
     var service = {}; // O factory deve retornar sempre um objeto
+    var evento = 'fotoCadastrada';
 
     service.cadastrar = function(foto) {
         return $q(function(resolve, reject) {
             if (foto._id) {
                 // Realiza o PUT
                 recursoFoto.update({ fotoId: foto._id }, foto, function() {
+
+                    $rootScope.$broadcast(evento);
+
                     resolve({
                         mensagem: 'Foto ' + foto.titulo + ' atualizada com sucesso!',
                         inclusao: false
@@ -30,6 +34,9 @@ angular.module('meusServicos', ['ngResource'])
             } else {
                 // Realiza o POST
                 recursoFoto.save(foto, function() {
+
+                    $rootScope.$broadcast(evento);
+                    
                     resolve({
                         mensagem: 'Foto ' + foto.titulo + ' incluida com sucesso!',
                         inclusao: true
